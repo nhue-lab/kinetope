@@ -1,26 +1,22 @@
-# DERIVE — musée des pages dérivées
+# WARREN — a laboratory of web storytelling
 
-Collection de pages web loufoques, autonome et figée. Chaque pièce = un dossier
-auto-contenu (HTML/CSS/JS embarqués), zéro backend, zéro CMS, zéro dépendance.
+Field notes on websites where the form is the content. Each entry documents the
+**mechanism** — how it's built, why it works — not just the link.
 
-## Pièces
+The catalogue is a fixed JSON file (`catalogue.json`), hand-curated, no backend.
 
-| N° | Pièce | Technique loufoque |
-|----|-------|--------------------|
-| 01 | [derive-matrix](pieces/derive-matrix/) | Terminal narratif scroll-storytelling, chat fantôme, lapin ASCII glitch |
-| 02 | [compteur-2003](pieces/compteur-2003/) | Compteur de visites figé à 000001, fenêtre Win98 en CSS pur, blink sans GIF |
+## Sites
 
-## Principes non négociables
+| # | Site | Mechanism |
+|---|------|-----------|
+| 1 | [DERIVE](sites/derive/hub.html) | Museum-hub of self-contained pages: Matrix-style narrative terminal, visit counter frozen since 2003 |
 
-- **Autonome** : chaque pièce marche seule, sertie dans son dossier, partageable par URL directe.
-- **Figée** : contenu en dur dans le code. Zéro maintenance, zéro modération, zéro API.
-- **Frugale** : < 20 Ko par pièce. Fonts système, aucune image (les "GIF" sont du CSS).
-- **Déterministe** : animations cycliques à durées fixes, aucun aléa non seedé.
-- **Sûre** : CSP stricte (`default-src 'none'`), pas de formulaire fonctionnel, pas de collecte.
+## Principles (non-negotiable)
 
-## Easter eggs
+- **Self-contained**: every site works standalone, shareable by direct URL.
+- **Frozen**: content lives in the code. Zero maintenance, zero moderation, zero API.
+- **Frugal**: platform < 10 KB, sites < 20 KB each. System fonts, zero images.
+- **Deterministic**: fixed-duration looping animations, no unseeded randomness.
+- **Safe**: strict CSP, no forms, no tracking, no cookies.
 
-Il y en a au moins un par pièce. Les curieux qui lisent la source sont récompensés.
-C'est le principe du musée : la plaque dit l'essentiel, la source dit le reste.
-
-> suis le lapin.
+> follow the white rabbit.
