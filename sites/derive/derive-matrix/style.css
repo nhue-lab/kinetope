@@ -122,25 +122,45 @@ body {
 .ln::after { content: "█"; color: var(--acide); animation: caret 1.1s steps(1) infinite; }
 @keyframes caret { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
-/* le lapin du prologue : fondu doux une fois la conversation finie.
-   Pas de glitch, pas de saut — il apparaît comme une présence, en dégradé. */
+/* le lapin du prologue — mise en scène d'apparition inquiétante :
+   1. bande des yeux seule (fixation, sans cligner)
+   2. le corps se matérialise autour
+   3. grand, trop proche, décalé à gauche
+   4. un micro-tressaut unique — il a bougé
+   5. le glow pulse : il respire */
 .lapin-prologue {
   font-family: "Cascadia Mono", "Cascadia Code", Consolas, "DejaVu Sans Mono", monospace;
-  font-size: clamp(0.7rem, 1.6vw, 1.1rem);
+  font-size: clamp(1.1rem, 2.6vw, 1.9rem);
   line-height: 1.25;
   color: var(--blanc);
   text-shadow: 0 0 10px rgba(204,255,0,0.45);
-  margin: 3rem 0 0 2ch;
+  margin: 2rem 0 0 6ch;
   align-self: flex-start;
   opacity: 0;
+  clip-path: inset(30% 0 62% 0);  /* au départ : seule la bande des yeux existe */
 }
 .ecran.tape .lapin-prologue {
-  /* démarre après la dernière ligne tapée (5 lignes → 5.8s + 1.2s de frappe) */
-  animation: reveler 1.6s ease-out 7.4s forwards;
+  animation:
+    fixage 0.35s steps(2) 7.4s forwards,        /* les yeux apparaissent, avec un sursaut */
+    reveal-corps 1.4s ease-in-out 10.2s forwards, /* le corps se matérialise autour */
+    tressaut 0.14s steps(1) 13.8s forwards,      /* il a bougé. une fois. */
+    respiration 3.2s ease-in-out 15s infinite;   /* puis il respire */
 }
-@keyframes reveler {
+@keyframes fixage {
   from { opacity: 0; }
   to   { opacity: 1; }
+}
+@keyframes reveal-corps {
+  from { clip-path: inset(30% 0 62% 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+@keyframes tressaut {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-2ch); }
+}
+@keyframes respiration {
+  0%, 100% { text-shadow: 0 0 10px rgba(204,255,0,0.45); }
+  50%      { text-shadow: 0 0 22px rgba(204,255,0,0.75); }
 }
 
 /* Choix */
@@ -242,6 +262,7 @@ footer a:hover { background: var(--acide); color: var(--noir); }
   .toutes-lignes .ln { animation: none; width: 100%; }
   .ln::after { content: ""; }
   .lapin.glitch { animation: none; }
+  .lapin-prologue { animation: none !important; opacity: 1; clip-path: none; } /* reduced-motion : présent, posé, fixe */
   .log { transition: none; opacity: 1; transform: none; }
   .reponse:not([hidden]) { animation: none; opacity: 1; }
 }
