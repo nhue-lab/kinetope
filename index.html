@@ -3,12 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="DERIVE — lucidités partagées de la culture internet. Un défouloir sans maintenance.">
+<meta name="description" content="DERIVE — lucidités partagées de la culture internet. Suis le lapin.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self'">
-<title>DERIVE — lucidités partagées</title>
+<title>DERIVE — suis le lapin</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<!-- easter egg : tu lis la source. respect. le mot de passe c'est "lapin" — clique 3 fois sur le lapin. -->
+
 <header class="hero">
   <div class="chat" id="chat" aria-hidden="true"></div>
   <h1 class="titre" id="titre" aria-label="DERIVE">
@@ -19,23 +21,73 @@
     <span>&nbsp;ça marche sur ma machine — c'est pas un bug c'est une feature — [deleted] — j'ai commencé un side project — gg wp — premier — source : je l'ai inventé — fyi je guess — ça dépend — &nbsp;ça marche sur ma machine — c'est pas un bug c'est une feature — [deleted] — j'ai commencé un side project — gg wp — premier — source : je l'ai inventé — fyi je guess — ça dépend —&nbsp;</span>
   </div>
 </header>
-<main>
-  <section class="salle" id="salle-1">
-    <span class="num">SALLE 01</span>
+
+<main class="term">
+
+  <!-- PROLOGUE -->
+  <section class="ecran" data-type="prologue">
+    <pre class="toutes-lignes" data-lines='["> connexion entrante…", "> identifiant inconnu détecté.", "> der1ve : bonjour. tu scrolles, donc tu existes (presque).", "> der1ve : tout le monde scrolle. peu importe la direction.", "> der1ve : on m&apos;a dit de te prévenir. le lapin revient toujours."]' aria-live="polite"></pre>
+  </section>
+
+  <!-- QUESTION 1 -->
+  <section class="ecran" data-type="question">
+    <pre class="toutes-lignes" data-lines='["> der1ve : c&apos;est pas un bug c&apos;est une feature.", "> der1ve : et toi ? tu es un bug ou une feature ?"]' aria-live="polite"></pre>
+    <div class="choix">
+      <button type="button" data-r="bug">je suis un bug</button>
+      <button type="button" data-r="feature">je suis une feature</button>
+    </div>
+    <p class="reponse" hidden="hidden">&gt; réponse enregistrée. peu importe. personne ne lit les logs.</p>
+  </section>
+
+  <!-- QUESTION 2 -->
+  <section class="ecran" data-type="question">
+    <pre class="toutes-lignes" data-lines='["> der1ve : question suivante. ne réfléchis pas trop, personne le fait.", "> der1ve : tu es ici par hasard, par ennui, ou par dérive ?"]' aria-live="polite"></pre>
+    <div class="choix">
+      <button type="button" data-r="hasard">le hasard</button>
+      <button type="button" data-r="ennui">l&apos;ennui</button>
+      <button type="button" data-r="derive">la dérive</button>
+    </div>
+    <p class="reponse" hidden="hidden">&gt; réponse enregistrée. mensonge détecté. c&apos;est toujours l&apos;ennui.</p>
+  </section>
+
+  <!-- LOGS (salles) -->
+  <section class="log log-1">
+    <span class="num">&gt; log.01 — 03:47</span>
     <h2>CRIS</h2>
     <p>Tout ce qu'on n'a pas le droit de dire dans les réunions, les formulaires, les cases. Ici, les lettres débordent.</p>
   </section>
-  <section class="salle" id="salle-2">
-    <span class="num">SALLE 02</span>
+  <section class="log log-2">
+    <span class="num">&gt; log.02 — 04:12</span>
     <h2>COULEURS</h2>
     <p>Rouge qui claque, jaune qui pique. Le goût, c'est ce qui reste quand on a fini de s'excuser.</p>
   </section>
-  <section class="salle" id="salle-3">
-    <span class="num">SALLE 03</span>
+  <section class="log log-3">
+    <span class="num">&gt; log.03 — 99:99</span>
     <h2>ABANDON</h2>
     <p>Laisse le curseur dériver. Rien n'est cassé, rien n'est propre. C'est le principe.</p>
   </section>
+
+  <!-- DENOUEMENT -->
+  <section class="ecran final" data-type="denouement">
+    <pre class="toutes-lignes" data-lines='["> der1ve : tu es allé au bout. peu font ça.", "> der1ve : la vérité ? il n&apos;y a rien à trouver.", "> der1ve : la dérive, c&apos;était le trajet. suis le lapin blanc."]' aria-live="polite"></pre>
+    <pre class="lapin" id="lapin" title="?">      /\   /\
+     { `---'  }
+     {  O O  }
+     ~~>  V  <~~
+      \  \|/  /
+       `-----'____
+       /     \    \_
+      {       }\  )_\_   _
+      |  \_/  |/ /  \_\_/ )
+       \__/  /(_/     \__/
+         (__/
+         (__(__)
+</pre>
+    <p class="secret" id="secret" hidden="hidden">&gt; la.packet du lapin : le lapin était le scroll. GG. tu peux partir maintenant. ou pas.</p>
+  </section>
+
 </main>
+
 <footer>
   <p>DERIVE — œil critique, main libre.</p>
   <a href="mailto:contact@example.org">Écrire un cri</a>

@@ -1,165 +1,172 @@
-/* DERIVE — hero "culture internet" + salles brutalistes */
+/* DERIVE — terminal intégral : hero, prologue, questions, logs, dénouement lapin */
 :root {
   --noir: #000;
   --blanc: #f5f5f0;
   --rouge: #ff2d55;
   --acide: #ccff00;
   --gris: #8a8a85;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
   background: var(--noir);
   color: var(--blanc);
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: var(--mono);
   overflow-x: hidden;
   cursor: crosshair;
 }
 
-/* ================= HERO ================= */
+/* ================= HERO (inchangée dans l'esprit) ================= */
 .hero {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  border-bottom: 4px solid var(--blanc);
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  position: relative; overflow: hidden;
+  border-bottom: 3px solid var(--acide);
   text-align: center;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
-
-/* --- Chat fantôme --- */
-.chat {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
+.chat { position: absolute; inset: 0; pointer-events: none; }
 .chat .ligne {
-  position: absolute;
-  font-size: 0.85rem;
-  color: var(--gris);
-  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
-  opacity: 0;
-  white-space: nowrap;
+  position: absolute; font-size: 0.85rem; color: var(--gris);
+  opacity: 0; white-space: nowrap;
   animation: apparait 6s linear forwards;
 }
 .chat .ligne b { color: var(--acide); font-weight: 400; }
 .chat .ligne:nth-child(odd) b { color: var(--rouge); }
-
 @keyframes apparait {
-  0%   { opacity: 0; transform: translateY(8px); }
-  10%  { opacity: 1; transform: translateY(0); }
-  75%  { opacity: 1; }
+  0% { opacity: 0; transform: translateY(8px); }
+  10% { opacity: 1; transform: translateY(0); }
+  75% { opacity: 1; }
   100% { opacity: 0; transform: translateY(-8px); }
 }
-
-/* --- Titre répulsif --- */
 .titre {
   font-size: clamp(4rem, 18vw, 15rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  display: flex;
-  user-select: none;
+  font-weight: 900; letter-spacing: -0.04em; line-height: 1;
+  display: flex; user-select: none;
 }
-.titre span {
-  display: inline-block;
-  will-change: transform;
-  transition: color 0.2s;
-}
+.titre span { display: inline-block; will-change: transform; transition: color 0.2s; }
 .titre span.proche { color: var(--acide); }
-
-/* --- Hook --- */
 .hook {
-  margin-top: 1.5rem;
-  font-size: clamp(0.9rem, 2vw, 1.3rem);
-  text-transform: uppercase;
-  letter-spacing: 0.3em;
-  color: var(--gris);
+  margin-top: 1.5rem; font-size: clamp(0.9rem, 2vw, 1.3rem);
+  text-transform: uppercase; letter-spacing: 0.3em; color: var(--gris);
 }
-.hook::before, .hook::after { content: " — "; color: var(--rouge); }
-
-/* --- Marquee --- */
 .marquee {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
+  position: absolute; bottom: 0; left: 0; right: 0;
   border-top: 3px solid var(--blanc);
-  background: var(--acide);
-  color: #000;
-  overflow: hidden;
+  background: var(--acide); color: #000; overflow: hidden;
 }
 .marquee span {
-  display: inline-block;
-  white-space: nowrap;
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 1rem;
-  padding: 0.5rem 0;
-  letter-spacing: 0.05em;
+  display: inline-block; white-space: nowrap; font-weight: 700;
+  text-transform: uppercase; font-size: 1rem; padding: 0.5rem 0;
   animation: defile 22s linear infinite;
 }
-@keyframes defile {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+@keyframes defile { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ================= TERMINAL ================= */
+.term { font-family: var(--mono); }
+
+.ecran {
+  min-height: 100vh;
+  padding: 15vh 8vw;
+  display: flex; flex-direction: column; justify-content: center;
+  border-bottom: 1px dashed #222;
+  font-size: clamp(0.95rem, 1.8vw, 1.25rem);
+  line-height: 1.8;
 }
 
-/* ================= SALLES ================= */
-.salle {
+/* Texte qui se tape : chaque ligne = animation steps() sur clip, délai en cascade */
+.toutes-lignes { white-space: pre-wrap; }
+.toutes-lignes .ln {
+  display: block; overflow: hidden; white-space: nowrap; width: 0;
+  animation: tape 1.2s steps(40) forwards;
+  animation-play-state: paused;
+}
+.ecran.tape .toutes-lignes .ln { animation-play-state: running; }
+/* délais en cascade : durée fixe par ligne, déterministe */
+.ecran.tape .ln:nth-child(1) { animation-delay: 0.2s; }
+.ecran.tape .ln:nth-child(2) { animation-delay: 1.6s; }
+.ecran.tape .ln:nth-child(3) { animation-delay: 3.0s; }
+.ecran.tape .ln:nth-child(4) { animation-delay: 4.4s; }
+.ecran.tape .ln:nth-child(5) { animation-delay: 5.8s; }
+@keyframes tape { to { width: 100%; } }
+
+/* caret blocant après chaque ligne tapée */
+.ln::after { content: "█"; color: var(--acide); animation: caret 0.8s steps(1) infinite; }
+@keyframes caret { 50% { opacity: 0; } }
+
+/* Choix */
+.choix { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+.choix button {
+  background: transparent; color: var(--acide);
+  border: 2px solid var(--acide); font: inherit;
+  padding: 0.7rem 1.4rem; min-height: 44px; cursor: pointer;
+}
+.choix button:hover, .choix button:focus-visible { background: var(--acide); color: #000; }
+.reponse { margin-top: 1.5rem; color: var(--gris); }
+.reponse:not([hidden]) { animation: apparait 1s linear forwards; opacity: 0; }
+
+/* ================= LOGS (salles) ================= */
+.log {
   min-height: 80vh;
   padding: 8vh 8vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-bottom: 4px solid var(--blanc);
-  opacity: 0;
-  transform: translate3d(0, 60px, 0);
+  display: flex; flex-direction: column; justify-content: center;
+  border-bottom: 3px solid var(--blanc);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  opacity: 0; transform: translate3d(0, 60px, 0);
   transition: opacity 0.6s linear, transform 0.6s linear;
 }
-.salle.visible { opacity: 1; transform: translate3d(0, 0, 0); }
-
-.salle:nth-of-type(1) { background: var(--rouge); color: var(--noir); }
-.salle:nth-of-type(2) { background: var(--acide); color: var(--noir); }
-.salle:nth-of-type(3) { background: var(--blanc); color: var(--noir); }
-
-.num {
-  font-size: 0.9rem;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-  opacity: 0.6;
+.log.visible { opacity: 1; transform: translate3d(0, 0, 0); }
+.log-1 { background: var(--rouge); color: var(--noir); }
+.log-2 { background: var(--acide); color: var(--noir); }
+.log-3 { background: var(--blanc); color: var(--noir); }
+.num { font-size: 0.9rem; letter-spacing: 0.3em; margin-bottom: 1rem; opacity: 0.6; font-family: var(--mono); }
+.log h2 {
+  font-size: clamp(3rem, 10vw, 8rem); font-weight: 900;
+  text-transform: uppercase; letter-spacing: -0.03em;
+  line-height: 0.95; margin-bottom: 1.5rem;
 }
-.salle h2 {
-  font-size: clamp(3rem, 10vw, 8rem);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: -0.03em;
-  line-height: 0.95;
-  margin-bottom: 1.5rem;
+.log p { font-size: clamp(1.1rem, 2vw, 1.4rem); max-width: 40ch; line-height: 1.5; }
+
+/* ================= DENOUEMENT ================= */
+.final { align-items: center; text-align: left; }
+.lapin {
+  font-family: var(--mono);
+  font-size: clamp(8px, 1.6vw, 18px);
+  line-height: 1.15;
+  color: var(--blanc);
+  margin: 3rem 0 1rem;
+  position: relative;
+  user-select: none;
 }
-.salle p { font-size: clamp(1.1rem, 2vw, 1.4rem); max-width: 40ch; line-height: 1.5; }
+/* glitch du lapin : doubles fantômes décalés, cyclique déterministe */
+.lapin::before, .lapin::after {
+  content: attr(data-rien);
+  position: absolute; inset: 0;
+}
+.lapin::before { content: ""; box-shadow: none; }
+.lapin.glitch { animation: secousse 4s steps(1) infinite; }
+@keyframes secousse {
+  0%, 92%, 100% { transform: translate(0); text-shadow: none; }
+  94% { transform: translate(-4px, 2px); text-shadow: 3px 0 var(--rouge), -3px 0 var(--acide); }
+  96% { transform: translate(4px, -2px); text-shadow: -3px 0 var(--rouge), 3px 0 var(--acide); }
+  98% { transform: translate(-2px, 0); text-shadow: 2px 0 var(--acide); }
+}
+.secret { color: var(--acide); margin-top: 2rem; }
 
 /* ================= FOOTER ================= */
 footer {
   padding: 4rem 8vw;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-  align-items: center;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; align-items: center;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 footer a {
-  color: var(--acide);
-  border: 3px solid var(--acide);
-  padding: 0.8rem 1.6rem;
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  font-weight: 700;
-  min-height: 44px;
+  color: var(--acide); border: 3px solid var(--acide);
+  padding: 0.8rem 1.6rem; text-decoration: none;
+  text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700; min-height: 44px;
 }
 footer a:hover { background: var(--acide); color: var(--noir); }
 
@@ -169,5 +176,9 @@ footer a:hover { background: var(--acide); color: var(--noir); }
   .chat .ligne { animation: none; opacity: 0.7; position: static; margin: 0.2rem 0; }
   .chat { position: static; display: flex; flex-wrap: wrap; gap: 0 2rem; justify-content: center; padding: 1rem; }
   .marquee span { animation: none; }
-  .salle { transition: none; opacity: 1; transform: none; }
+  .toutes-lignes .ln { animation: none; width: 100%; }
+  .ln::after { content: ""; }
+  .lapin.glitch { animation: none; }
+  .log { transition: none; opacity: 1; transform: none; }
+  .reponse:not([hidden]) { animation: none; opacity: 1; }
 }
