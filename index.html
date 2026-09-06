@@ -3,34 +3,84 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="WARREN — a laboratory of web storytelling.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self'">
-<title>WARREN — a laboratory of web storytelling</title>
+<meta name="description" content="KINETOPE — a laboratory of web storytelling.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'">
+<title>KINETOPE — a laboratory of web storytelling</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header class="hero">
-  <h1 class="logo">WARREN</h1>
+  <h1 class="logo">KINETOPE</h1>
   <p class="tagline">A laboratory of web storytelling.</p>
   <p class="detail">Field notes on websites where the form is the content: scroll-narratives,
   experiments, pages whose journey is the story. Every entry documents the mechanism —
   how it's built, why it works — not just the link. Follow the rabbit past the homepage.</p>
-  <p class="status" id="status">&gt; loading specimens&hellip; ▚</p>
+  <p class="status">&gt; status: <b>1</b> specimen catalogued — last entry <b>2026-09-06</b></p>
 </header>
 
-<main id="galerie">
-  <noscript>
-    <p class="noscript">The catalogue is a fixed JSON file: <a href="catalogue.json">read it directly</a>.
-    (JavaScript here only makes it pretty.)</p>
-  </noscript>
+<main>
+
+  <!-- ============================================================
+       SPEC-001 — DERIVE
+       Ajouter un spécimen = copier ce bloc, incrémenter SPEC-00N.
+       La scène est la seule zone colorée : elle appartient au site.
+       ============================================================ -->
+  <article class="fiche">
+    <div class="tete">
+      <span class="ref">SPEC-001</span>
+      <h2>DERIVE</h2>
+      <span class="obs">obs. 2026-09-06</span>
+    </div>
+
+    <a class="scene scene-terminal" href="sites/derive/hub.html" aria-label="Enter DERIVE — the museum of derived pages">
+      <div class="scanlines" aria-hidden="true"></div>
+      <p class="t"><b>der1ve:</b> connection incoming…</p>
+      <p class="t"><b>anon_1997:</b> c'est pas un bug c'est une feature</p>
+      <p class="t"><b>modérateur:</b> [deleted]</p>
+      <p class="t grand caret">&gt; follow the white rabbit.</p>
+      <span class="cta-hover" aria-hidden="true">enter the terminal →</span>
+    </a>
+
+    <div class="corps">
+      <div>
+        <p class="label">mechanism</p>
+        <p>A museum-hub exhibiting self-contained web pages as exhibits: a Matrix-inspired
+        narrative terminal (exhibit derive-matrix), a visit counter frozen at 000001 since 2003
+        (exhibit compteur-2003). Each page is standalone, under 6 KB, with easter eggs in the
+        source code.</p>
+        <p class="label data">specimen data</p>
+        <p class="data">the museum of derived pages · 2026 · 56 KB · local experience</p>
+      </div>
+      <div>
+        <p class="label">why it's here</p>
+        <p class="pourquoi">KINETOPE's first resident. Proof that a frozen, maintenance-free
+        page can stay alive: the content never moves, the experience neither — and that's the point.</p>
+        <p class="label data">notes from the lab</p>
+        <p class="pourquoi">The counter never lies. It has never lied. It will never say anything
+        else. Easter egg: 3 clicks on the rabbit in derive-matrix — the source code tells you
+        the password.</p>
+      </div>
+    </div>
+
+    <div class="pied">
+      <div class="tags">
+        <span>collection</span><span>nostalgia</span><span>irony</span><span>easter eggs ✓</span>
+      </div>
+      <ul class="exhibits">
+        <li><a href="sites/derive/derive-matrix/">derive-matrix</a></li>
+        <li><a href="sites/derive/compteur-2003/">compteur-2003</a></li>
+      </ul>
+      <a class="cta" href="sites/derive/hub.html">enter →</a>
+    </div>
+  </article>
+
 </main>
 
 <footer>
   <p class="signature">&gt; follow the white rabbit.</p>
-  <p>WARREN — closed curation, zero tracking, zero cookies. The catalogue lives in the repo.</p>
+  <p>KINETOPE — closed curation, zero tracking, zero cookies. The catalogue is this HTML file.</p>
 </footer>
 
-<script src="app.js"></script>
 </body>
 </html>

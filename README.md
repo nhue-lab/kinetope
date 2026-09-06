@@ -1,22 +1,27 @@
-# WARREN — a laboratory of web storytelling
+# KINETOPE — a laboratory of web storytelling
 
-Field notes on websites where the form is the content. Each entry documents the
-**mechanism** — how it's built, why it works — not just the link.
+KINETOPE (from Greek *kinetos*, "moved", and *topos*, "place") — the place of
+movement. A laboratory of websites where the form is the content: the journey
+is the story. Each entry documents the **mechanism** — how it's built, why it
+works — not just the link.
 
-The catalogue is a fixed JSON file (`catalogue.json`), hand-curated, no backend.
+The catalogue is this HTML file (`index.html`), hand-curated, no backend, no
+JavaScript on the platform side. To add a specimen: copy the block, increment
+`SPEC-00N`.
 
-## Sites
+## Specimens
 
-| # | Site | Mechanism |
-|---|------|-----------|
-| 1 | [DERIVE](sites/derive/hub.html) | Museum-hub of self-contained pages: Matrix-style narrative terminal, visit counter frozen since 2003 |
+| # | Ref | Site | Mechanism |
+|---|-----|------|-----------|
+| 1 | SPEC-001 | [DERIVE](sites/derive/hub.html) | Museum-hub of self-contained pages: Matrix-style narrative terminal, visit counter frozen since 2003 |
 
 ## Principles (non-negotiable)
 
 - **Self-contained**: every site works standalone, shareable by direct URL.
 - **Frozen**: content lives in the code. Zero maintenance, zero moderation, zero API.
-- **Frugal**: platform < 10 KB, sites < 20 KB each. System fonts, zero images.
+- **Frugal**: platform < 12 KB, sites < 20 KB each. System fonts, zero images.
 - **Deterministic**: fixed-duration looping animations, no unseeded randomness.
-- **Safe**: strict CSP, no forms, no tracking, no cookies.
-
-> follow the white rabbit.
+- **Safe**: strict CSP (`default-src 'none'; style-src 'self'`), no forms, no
+  tracking, no cookies, no JavaScript on the platform.
+- **Neutral chrome**: the platform stays quiet (paper & ink). Color and motion
+  belong to the specimens.
