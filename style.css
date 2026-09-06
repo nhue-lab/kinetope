@@ -131,12 +131,17 @@ body {
 /* ===== Galerie — la gravité est cassée : les fiches sont mal posées sur la table ===== */
 #galerie { padding: 5vh 8vw 9vh; }
 
+/* ===== Planche-contact : fiche en rangée = vignette + cartouche ===== */
 .fiche {
-  margin-bottom: 5rem;
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  margin-bottom: 3.5rem;
   border: 1px solid var(--encre);
   background: #fff;
   box-shadow: 8px 8px 0 rgba(17,17,16,0.06);
+  overflow: hidden;
 }
+@media (max-width: 800px) { .fiche { grid-template-columns: 1fr; } }
 
 /* inclinaisons déterministes : cycle fixe, pas d'aléa (nth-of-type) */
 .fiche:nth-of-type(3n+1) { transform: rotate(-0.6deg); margin-left: 0; }
@@ -180,21 +185,27 @@ body {
 }
 .fiche .obs { font-family: var(--mono); font-size: 0.72rem; color: var(--gris); letter-spacing: 0.12em; }
 
-/* ===== Scène : seule zone colorée de la fiche. Le contraste fait l'accroche. ===== */
-.fiche .scene {
-  display: block; position: relative;
-  height: clamp(220px, 34vw, 380px);
+/* ===== Vignette : le portrait du spécimen — seule zone colorée de la fiche ===== */
+.fiche .vignette {
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative;
+  min-height: 280px;
   overflow: hidden;
-  border-bottom: 1px solid var(--encre);
+  border-right: 1px solid var(--encre);
   text-decoration: none;
   color: #f5f5f0;
+  transition: filter 0.25s;
 }
-.fiche .scene:hover .cta-hover, .fiche .scene:focus-visible .cta-hover { opacity: 1; }
+@media (max-width: 800px) {
+  .fiche .vignette { border-right: 0; border-bottom: 1px solid var(--encre); min-height: 180px; }
+}
+.fiche .vignette:hover { filter: brightness(1.15); }
+.fiche .vignette:hover .cta-hover { opacity: 1; }
 .cta-hover {
-  position: absolute; right: 1.5rem; bottom: 1.5rem;
+  position: absolute; right: 1rem; bottom: 1rem;
   background: var(--acide); color: #000;
-  padding: 0.6rem 1.2rem; font-weight: 700; letter-spacing: 0.1em;
-  font-family: var(--mono); font-size: 0.8rem;
+  padding: 0.5rem 1rem; font-weight: 700; letter-spacing: 0.1em;
+  font-family: var(--mono); font-size: 0.75rem;
   opacity: 0; transition: opacity 0.2s;
 }
 
@@ -271,28 +282,39 @@ body {
   background: #f1f1ee;
 }
 
-/* ===== Corps : sur papier, sobre ===== */
-.fiche .corps { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-@media (max-width: 800px) { .fiche .corps { grid-template-columns: 1fr; } }
-.fiche .corps > div { padding: 2rem; }
-.fiche .corps > div + div { border-left: 1px solid var(--ligne); }
-@media (max-width: 800px) {
-  .fiche .corps > div + div { border-left: 0; border-top: 1px solid var(--ligne); }
-}
+/* ===== Corps du cartouche : une colonne, plus compact ===== */
+.fiche-corps { display: flex; flex-direction: column; min-width: 0; }
+
+.fiche .corps { padding: 1.4rem 2rem; }
 
 .label {
   font-family: var(--mono);
   color: var(--gris);
   font-size: 0.7rem; letter-spacing: 0.3em;
-  text-transform: uppercase; margin-bottom: 0.6rem;
+  text-transform: uppercase; margin-bottom: 0.4rem;
 }
-.fiche .corps p:not(.label) { font-size: 0.95rem; }
+.fiche .corps p:not(.label) { font-size: 0.9rem; }
 .fiche .pourquoi { color: var(--gris); font-style: italic; }
-.fiche .data { margin-top: 1.2rem; font-family: var(--mono); font-size: 0.85rem; }
+.fiche .data { margin-top: 1.1rem; font-family: var(--mono); font-size: 0.8rem; }
+
+.fiche .exhibits { margin-top: 0.4rem; }
+.fiche .exhibits { display: flex; gap: 1.2rem; flex-wrap: wrap; list-style: none; }
+.fiche .exhibits a {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--encre); text-decoration: none; border-bottom: 1px solid var(--gris-clair);
+  display: inline-block; padding: 0.1rem 0;
+}
+.fiche .exhibits a:hover, .fiche .exhibits a:focus-visible {
+  border-color: var(--encre);
+}
+
+.fiche .tete { border-bottom: 1px solid var(--encre); }
+.fiche .pied { border-top: 1px solid var(--encre); margin-top: auto; }
 
 .fiche .pied {
   display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
-  padding: 1.1rem 2rem; border-top: 1px solid var(--encre);
+  padding: 1rem 2rem;
 }
 .tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-right: auto; }
 .tags span {
