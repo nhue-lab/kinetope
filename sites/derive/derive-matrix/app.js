@@ -69,6 +69,27 @@
     Array.prototype.forEach.call(document.querySelectorAll(".ecran"), function (e) { e.classList.add("tape"); });
   }
 
+  /* ---------- Cadrage par bloc : le scroll s'aimante au bloc en cours ----------
+     Chaque .ecran est un « plan » du récit. Quand on entre dedans (35% visible),
+     un scroll doux cale le haut du bloc en haut du viewport — le visiteur reste
+     dans le cadre pendant la lecture/le typing. Déclenché une seule fois par
+     bloc, jamais en arrière. reduced-motion : pas d'aimantation. */
+  if (!reduced && "IntersectionObserver" in window) {
+    var cadrage = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var bloc = entry.target;
+        cadrage.unobserve(bloc);
+        // caler le haut du bloc : léger délai pour laisser la transition respirer
+        setTimeout(function () {
+          var y = bloc.getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }, 250);
+      });
+    }, { threshold: 0.35 });
+    Array.prototype.forEach.call(document.querySelectorAll(".ecran"), function (e) { cadrage.observe(e); });
+  }
+
   /* ---------- Questions : conversation avec le terminal ----------
      - boutons numérotés [1]/[2], raccourcis clavier 1/2
      - confirmation tapée par le terminal après le choix
