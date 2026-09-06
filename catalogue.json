@@ -1,0 +1,30 @@
+{
+  "$schema": "Catalogue Terrier v1 — figé, édité à la main (curation fermée).",
+  "plateforme": {
+    "nom": "Terrier",
+    "tagline": "Des sites qui racontent, pas des sites qui vendent.",
+    "description": "Sélection de sites web où la forme est le fond : storytelling, scroll-narratif, expériences originales. Chaque entrée explique la mécanique, pas juste le lien.",
+    "url": "/",
+    "contact": "mailto:contact@example.org"
+  },
+  "sites": [
+    {
+      "id": "derive",
+      "titre": "DERIVE",
+      "sous_titre": "le musée des pages dérivées",
+      "url": "sites/derive/hub.html",
+      "annee": "2026",
+      "auteur": "Terrier",
+      "tags": ["collection", "nostalgie", "ironie"],
+      "type": "expérience locale",
+      "mecanique": "Un hub-musée qui expose des pages web auto-contenues comme des œuvres : terminal narratif inspiré de Matrix (pièce derive-matrix), compteur de visites figé à 000001 depuis 2003 (pièce compteur-2003). Chaque page est autonome, < 6 Ko, avec easter eggs dans le code source.",
+      "pourquoi": "Le premier locataire du terrier. La preuve qu'une page figée sans maintenance peut être vivante : le contenu ne bouge jamais, l'expérience non plus — et c'est le principe.",
+      "poids_ko": 56,
+      "easter_eggs": true,
+      "pieces": [
+        { "id": "derive-matrix", "nom": "derive-matrix", "url": "sites/derive/derive-matrix/" },
+        { "id": "compteur-2003", "nom": "compteur-2003", "url": "sites/derive/compteur-2003/" }
+      ]
+    }
+  ]
+}

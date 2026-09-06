@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Terrier — des sites qui racontent, pas des sites qui vendent.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self'">
+<title>Terrier — des sites qui racontent</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1 class="logo">TERRIER</h1>
+  <p class="tagline">Des sites qui racontent, pas des sites qui vendent.</p>
+  <p class="detail">Sélection figée de sites où la forme est le fond : scroll-narratif, expériences,
+  pages dont le parcours est l'histoire. Chaque fiche explique la mécanique — pas seulement le lien.</p>
+</header>
+
+<main id="galerie" aria-live="polite">
+  <noscript>
+    <p class="noscript">Le catalogue est un fichier JSON figé : <a href="catalogue.json">lisez-le directement</a>.
+    (JavaScript ne sert ici qu'à l'afficher joliment.)</p>
+  </noscript>
+</main>
+
+<footer>
+  <p>Terrier — curation fermée, zéro tracking, zéro cookie. Le catalogue est dans le repo.</p>
+  <p class="signature">&gt; suis le lapin.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

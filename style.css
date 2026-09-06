@@ -1,0 +1,114 @@
+/* TERRIER — plateforme vitrine de sites storytelling. Statique, frugal, déterministe. */
+:root {
+  --noir: #0a0a0a;
+  --blanc: #f5f5f0;
+  --acide: #ccff00;
+  --rouge: #ff2d55;
+  --gris: #8a8a85;
+  --carte: #121212;
+  --bordure: #262626;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--noir);
+  color: var(--blanc);
+  font-family: var(--mono);
+  line-height: 1.6;
+}
+
+/* ===== Hero ===== */
+.hero { padding: 12vh 8vw 8vh; border-bottom: 3px solid var(--acide); }
+.logo {
+  font-size: clamp(3rem, 12vw, 9rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+.logo::after { content: "_"; color: var(--acide); animation: caret 1s steps(1) infinite; }
+@keyframes caret { 50% { opacity: 0; } }
+
+.tagline {
+  margin-top: 1rem;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  color: var(--acide);
+}
+.detail { margin-top: 1rem; max-width: 60ch; color: var(--gris); font-size: 0.95rem; }
+
+/* ===== Galerie ===== */
+#galerie { padding: 4vh 8vw 8vh; }
+
+.fiche {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: 2.5rem;
+  padding: 3rem;
+  margin-bottom: 2.5rem;
+  background: var(--carte);
+  border: 1px solid var(--bordure);
+  border-left: 4px solid var(--acide);
+}
+@media (max-width: 800px) { .fiche { grid-template-columns: 1fr; } }
+
+.fiche .identite .num {
+  font-size: 0.75rem; letter-spacing: 0.3em; color: var(--gris);
+}
+.fiche .identite h2 {
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 900; letter-spacing: -0.02em; margin: 0.3rem 0;
+}
+.fiche .identite .sous { color: var(--gris); font-style: italic; }
+.fiche .identite .meta {
+  margin-top: 1rem; font-size: 0.8rem; color: var(--gris);
+}
+.fiche .identite .meta b { color: var(--blanc); font-weight: 400; }
+
+.tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+.tags span {
+  border: 1px solid var(--bordure); padding: 0.15rem 0.6rem;
+  font-size: 0.72rem; color: var(--gris); letter-spacing: 0.1em;
+}
+
+.fiche .corps p { font-size: 0.95rem; margin-bottom: 1rem; }
+.fiche .corps .label {
+  color: var(--acide); font-size: 0.75rem; letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+.fiche .corps .mecanique { color: var(--blanc); }
+.fiche .corps .pourquoi { color: var(--gris); font-style: italic; }
+
+.fiche .corps .pieces { margin: 1rem 0; list-style: none; }
+.fiche .corps .pieces a {
+  color: var(--blanc); text-decoration: none; border-bottom: 1px solid var(--bordure);
+  display: inline-block; padding: 0.2rem 0; margin-right: 1.5rem;
+}
+.fiche .corps .pieces a:hover, .fiche .corps .pieces a:focus-visible {
+  color: var(--acide); border-color: var(--acide);
+}
+
+.cta {
+  display: inline-block; margin-top: 0.5rem;
+  color: var(--noir); background: var(--acide);
+  padding: 0.7rem 1.4rem; min-height: 44px;
+  text-decoration: none; font-weight: 700; letter-spacing: 0.1em;
+}
+.cta:hover, .cta:focus-visible { background: var(--blanc); }
+
+/* ===== Footer / noscript ===== */
+footer {
+  padding: 3rem 8vw; border-top: 1px solid var(--bordure);
+  color: var(--gris); font-size: 0.85rem;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+}
+.signature { color: var(--acide); }
+.noscript { border: 1px dashed var(--gris); padding: 1.5rem; color: var(--gris); }
+.noscript a { color: var(--acide); }
+
+/* ===== A11y ===== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .logo::after { animation: none; }
+}
