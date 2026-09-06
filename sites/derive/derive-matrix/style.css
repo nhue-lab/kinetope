@@ -109,7 +109,9 @@ body {
 .reponse { margin-top: 1.5rem; color: var(--gris); }
 .reponse:not([hidden]) { animation: apparait 1s linear forwards; opacity: 0; }
 
-/* ================= LOGS (salles) ================= */
+/* ================= LOGS (salles) =================
+   En-têtes mono (continuité terminal) + aplats assumés (l'explosion est préparée
+   par l'écran de couture). Chaque couleur est justifiée par le contenu du log. */
 .log {
   min-height: 80vh;
   padding: 8vh 8vw;
@@ -120,9 +122,9 @@ body {
   transition: opacity 0.6s linear, transform 0.6s linear;
 }
 .log.visible { opacity: 1; transform: translate3d(0, 0, 0); }
-.log-1 { background: var(--rouge); color: var(--noir); }
-.log-2 { background: var(--acide); color: var(--noir); }
-.log-3 { background: var(--blanc); color: var(--noir); }
+.log-1 { background: var(--rouge); color: var(--noir); }  /* CRIS : l'alerte critique */
+.log-2 { background: var(--acide); color: var(--noir); }  /* COULEURS : le bruit visible */
+.log-3 { background: var(--blanc); color: var(--noir); }  /* ABANDON : la page blanche */
 .num { font-size: 0.9rem; letter-spacing: 0.3em; margin-bottom: 1rem; opacity: 0.6; font-family: var(--mono); }
 .log h2 {
   font-size: clamp(3rem, 10vw, 8rem); font-weight: 900;
@@ -148,7 +150,7 @@ body {
   position: absolute; inset: 0;
 }
 .lapin::before { content: ""; box-shadow: none; }
-.lapin.glitch { animation: secousse 4s steps(1) infinite; }
+.lapin.glitch { animation: secousse 7s steps(1) infinite; }
 @keyframes secousse {
   0%, 92%, 100% { transform: translate(0); text-shadow: none; }
   94% { transform: translate(-4px, 2px); text-shadow: 3px 0 var(--rouge), -3px 0 var(--acide); }
@@ -156,6 +158,22 @@ body {
   98% { transform: translate(-2px, 0); text-shadow: 2px 0 var(--acide); }
 }
 .secret { color: var(--acide); margin-top: 2rem; }
+
+/* navigation muséale : la boucle du parcours */
+.suite {
+  margin-top: 3rem;
+  display: flex; gap: 1.5rem; flex-wrap: wrap;
+}
+.suite a {
+  color: var(--blanc);
+  border: 2px solid var(--gris);
+  padding: 0.7rem 1.3rem;
+  text-decoration: none;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  min-height: 44px;
+}
+.suite a:hover, .suite a:focus-visible { border-color: var(--acide); color: var(--acide); }
 
 /* ================= FOOTER ================= */
 footer {

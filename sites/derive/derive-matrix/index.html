@@ -50,19 +50,22 @@
     <p class="reponse" hidden="hidden">&gt; réponse enregistrée. mensonge détecté. c&apos;est toujours l&apos;ennui.</p>
   </section>
 
-  <!-- LOGS (salles) -->
+  <!-- LOGS (salles) — la couture : le terminal "imprime" les fichiers -->
+  <section class="ecran couture" data-type="transition">
+    <pre class="toutes-lignes" data-lines='["> der1ve : ouverture des fichiers de session.", "> der1ve : 3 logs. lis-les dans l&apos;ordre. ou pas."]' aria-live="polite"></pre>
+  </section>
   <section class="log log-1">
-    <span class="num">&gt; log.01 — 03:47</span>
+    <span class="num">&gt; log.01 — 03:47 — gravité: critique — sourcé: inconnu</span>
     <h2>CRIS</h2>
     <p>Tout ce qu'on n'a pas le droit de dire dans les réunions, les formulaires, les cases. Ici, les lettres débordent.</p>
   </section>
   <section class="log log-2">
-    <span class="num">&gt; log.02 — 04:12</span>
+    <span class="num">&gt; log.02 — 04:12 — gravité: cosmetique — sourcé: partout</span>
     <h2>COULEURS</h2>
     <p>Rouge qui claque, jaune qui pique. Le goût, c'est ce qui reste quand on a fini de s'excuser.</p>
   </section>
   <section class="log log-3">
-    <span class="num">&gt; log.03 — 99:99</span>
+    <span class="num">&gt; log.03 — 99:99 — gravité: n/a — sourcé: nulle part</span>
     <h2>ABANDON</h2>
     <p>Laisse le curseur dériver. Rien n'est cassé, rien n'est propre. C'est le principe.</p>
   </section>
@@ -84,6 +87,10 @@
          (__(__)
 </pre>
     <p class="secret" id="secret" hidden="hidden">&gt; la.packet du lapin : le lapin était le scroll. GG. tu peux partir maintenant. ou pas.</p>
+    <nav class="suite" aria-label="Suite du musée">
+      <a href="../compteur-2003/">pièce suivante →</a>
+      <a href="../">← retour au musée</a>
+    </nav>
   </section>
 
 </main>
@@ -91,6 +98,9 @@
 <footer>
   <p>DERIVE — œil critique, main libre.</p>
   <a href="mailto:contact@example.org">Écrire un cri</a>
+</footer>
+<footer style="padding-top:0">
+  <p style="width:100%"><a href="../../" style="color:var(--gris);font-family:var(--mono);font-size:0.85rem">← musée parent : KINETOPE</a></p>
 </footer>
 <script src="app.js"></script>
 </body>
