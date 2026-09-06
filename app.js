@@ -1,4 +1,4 @@
-/* WARREN v3 — catalogue rendering. All JSON fields HTML-escaped before injection. */
+/* WARREN v4 — catalogue rendering + CSS-only previews. All fields escaped. */
 (function () {
   "use strict";
 
@@ -6,7 +6,6 @@
   var status = document.getElementById("status");
   if (!galerie) return;
 
-  // Escape every dynamic string — the catalogue is ours, but robustness is not optional.
   function esc(v) {
     return String(v == null ? "" : v)
       .replace(/&/g, "&amp;")
@@ -18,7 +17,30 @@
 
   function pad(n) { return (n < 10 ? "00" : n < 100 ? "0" : "") + n; }
 
-  function ficheHTML(s, idx, total) {
+  /* Miniatures en CSS pur : chaque type = un décor reconnaissable, 0 image. */
+  function previewHTML(s) {
+    var t = s.preview && s.preview.type;
+    if (t === "terminal") {
+      var lignes = (s.preview.lines || []).map(function (l) {
+        return "<span><b>" + esc(l[0]) + "</b> " + esc(l[1]) + "</span>";
+      }).join("");
+      return '<div class="cadre mini-term" aria-hidden="true">' +
+        lignes +
+        '<span class="caret-ligne">&gt; </span></div>';
+    }
+    if (t === "retro2003") {
+      var digits = (s.preview.counter || "000001").split("").map(function (d) {
+        return '<span class="d">' + esc(d) + "</span>";
+      }).join("");
+      return '<div class="cadre mini-2003" aria-hidden="true">' +
+        '<div class="fen"><div class="barre"><span>welcome.htm</span><i>X</i></div></div>' +
+        '<div class="digits">' + digits + "</div>" +
+        '<p class="blink">UNDER CONSTRUCTION SINCE 2003</p></div>';
+    }
+    return '<div class="cadre mini-none" aria-hidden="true">[ preview pending ]</div>';
+  }
+
+  function ficheHTML(s, idx) {
     var ref = "SPEC-" + pad(idx + 1);
     var observed = s.observed || s.year || "";
 
@@ -41,13 +63,15 @@
           "<div>" +
             '<p class="label">mechanism</p>' +
             "<p>" + esc(s.mechanism) + "</p>" +
-          "</div>" +
-          "<div>" +
-            '<p class="label">why it&#39;s here</p>' +
+            '<p class="label" style="margin-top:1.2rem">why it&#39;s here</p>' +
             '<p class="pourquoi">' + esc(s.why_here) + "</p>" +
-            '<p class="label" style="margin-top:1.2rem">specimen data</p>' +
+            '<p class="label data">specimen data</p>' +
             "<p>" + esc(s.subtitle || "") + " · " + esc(s.year) +
               " · " + esc(s.weight_kb) + " KB · " + esc(s.type) + "</p>" +
+          "</div>" +
+          '<div class="visuel">' +
+            '<p class="label">preview</p>' +
+            previewHTML(s) +
           "</div>" +
         "</div>" +
         '<div class="pied">' +
@@ -71,15 +95,8 @@
         status.textContent = "> status: 0 specimens catalogued";
         return;
       }
+      galerie.innerHTML = sites.map(ficheHTML).join("");
 
-      var html = sites.map(function (s, idx) {
-        return ficheHTML(s, idx, sites.length);
-      }).join("");
-
-      // One shot: gallery is static after render (no aria-live chatter).
-      galerie.innerHTML = html;
-
-      // Instrumentation line: deterministic, derived from the data itself.
       var last = sites[sites.length - 1];
       var date = last.observed || last.year || "n/a";
       status.innerHTML =

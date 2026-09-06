@@ -1,10 +1,10 @@
-/* WARREN v3 — laboratory UI. Specimen sheets, instrumentation accents. */
+/* WARREN v4 — specimen sheets + CSS-only live previews. Zero images. */
 :root {
   --noir: #0a0a0a;
   --blanc: #f5f5f0;
   --acide: #ccff00;
   --rouge: #ff2d55;
-  --gris: #9a9a95;      /* ≥ 5.5:1 sur --noir et --carte */
+  --gris: #9a9a95;
   --carte: #121212;
   --bordure: #2a2a2a;
   --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
@@ -33,25 +33,16 @@ body {
 .logo::after { content: "_"; color: var(--acide); animation: caret 1s steps(1) infinite; }
 @keyframes caret { 50% { opacity: 0; } }
 
-.tagline {
-  margin-top: 1rem;
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
-  color: var(--acide);
-}
+.tagline { margin-top: 1rem; font-size: clamp(1rem, 2.5vw, 1.5rem); color: var(--acide); }
 .detail { margin-top: 1rem; max-width: 62ch; color: var(--gris); font-size: 0.95rem; }
 
-/* ligne d'instrumentation : statut du labo, alimentée par le catalogue */
 .status {
-  margin-top: 2rem;
-  font-size: 0.8rem;
-  color: var(--gris);
-  border: 1px dashed var(--bordure);
-  display: inline-block;
-  padding: 0.4rem 0.9rem;
+  margin-top: 2rem; font-size: 0.8rem; color: var(--gris);
+  border: 1px dashed var(--bordure); display: inline-block; padding: 0.4rem 0.9rem;
 }
 .status b { color: var(--acide); font-weight: 400; }
 
-/* ===== Galerie : fiches de spécimen ===== */
+/* ===== Galerie ===== */
 #galerie { padding: 5vh 8vw 9vh; }
 
 .fiche {
@@ -60,35 +51,19 @@ body {
   background: var(--carte);
 }
 
-/* -- header du spécimen : full width, bande d'identité -- */
 .fiche .tete {
-  display: flex;
-  align-items: baseline;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  padding: 1.2rem 2rem;
-  border-bottom: 1px solid var(--bordure);
-  background: #161616;
+  display: flex; align-items: baseline; gap: 1.5rem; flex-wrap: wrap;
+  padding: 1.2rem 2rem; border-bottom: 1px solid var(--bordure); background: #161616;
 }
-.fiche .ref {
-  font-size: 0.78rem;
-  letter-spacing: 0.25em;
-  color: var(--acide);
-}
+.fiche .ref { font-size: 0.78rem; letter-spacing: 0.25em; color: var(--acide); }
 .fiche .tete h2 {
   font-family: var(--sans);
   font-size: clamp(1.6rem, 4vw, 2.4rem);
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  margin-right: auto;
+  font-weight: 900; letter-spacing: -0.02em; margin-right: auto;
 }
 .fiche .obs { font-size: 0.75rem; color: var(--gris); letter-spacing: 0.15em; }
 
-/* -- corps : deux colonnes séparées par une ligne, pas une grille de cartes -- */
-.fiche .corps {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-}
+.fiche .corps { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 @media (max-width: 800px) { .fiche .corps { grid-template-columns: 1fr; } }
 .fiche .corps > div { padding: 2rem; }
 .fiche .corps > div + div { border-left: 1px solid var(--bordure); }
@@ -97,23 +72,70 @@ body {
 }
 
 .label {
-  color: var(--acide);
-  font-size: 0.72rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  margin-bottom: 0.6rem;
+  color: var(--acide); font-size: 0.72rem; letter-spacing: 0.3em;
+  text-transform: uppercase; margin-bottom: 0.6rem;
 }
 .fiche .corps p:not(.label) { font-size: 0.95rem; }
 .fiche .pourquoi { color: var(--gris); font-style: italic; }
+.fiche .data { margin-top: 1.2rem; }
 
-/* -- pied de fiche : tags + exhibits + entrée -- */
+/* ===== Preview : miniature du site, CSS pur, 0 image ===== */
+.fiche .visuel {
+  padding: 2rem;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+@media (max-width: 800px) { .fiche .corps { grid-template-columns: 1fr; } .fiche .visuel { border-top: 1px solid var(--bordure); } }
+
+.cadre {
+  border: 1px solid var(--bordure);
+  background: var(--noir);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  position: relative;
+  /* la miniature est un décor, pas du contenu : masquée aux lecteurs d'écran */
+}
+.cadre a { display: block; width: 100%; height: 100%; }
+
+/* --- preview type "terminal" (derive-matrix) --- */
+.mini-term { font-size: clamp(0.4rem, 1vw, 0.7rem); line-height: 1.7; padding: 10% 12%; }
+.mini-term span { display: block; color: var(--gris); }
+.mini-term span b { color: var(--acide); font-weight: 400; }
+.mini-term span:nth-child(odd) b { color: var(--rouge); }
+.mini-term .caret-ligne { color: var(--blanc); }
+.mini-term .caret-ligne::after { content: "█"; color: var(--acide); }
+
+/* --- preview type "2003" (compteur) --- */
+.mini-2003 { background: #000030; height: 100%; padding: 8%; text-align: center; }
+.mini-2003 .fen {
+  background: #c0c0c0; border: 2px solid; border-color: #fff #404040 #404040 #fff;
+  margin: 0 auto; max-width: 70%; text-align: left;
+}
+.mini-2003 .fen .barre {
+  background: #000080; color: #fff; font-size: 0.45rem; padding: 2px 6px;
+  font-family: var(--sans); display: flex; justify-content: space-between;
+}
+.mini-2003 .fen .barre i { background: #c0c0c0; color: #000; font-style: normal; padding: 0 3px; }
+.mini-2003 .digits { margin-top: 8%; display: flex; gap: 3px; justify-content: center; }
+.mini-2003 .d {
+  font-size: clamp(0.6rem, 1.6vw, 1rem); font-weight: bold; color: #0f0;
+  background: #001800; padding: 1px 5px; text-shadow: 0 0 5px #0f0;
+  font-family: var(--mono);
+}
+.mini-2003 .blink { color: #ff0; font-size: 0.5rem; margin-top: 8%; }
+@media (prefers-reduced-motion: no-preference) {
+  .mini-2003 .blink { animation: mblink 1s steps(1) infinite; }
+  @keyframes mblink { 50% { visibility: hidden; } }
+}
+
+/* --- fallback : pas de preview définie --- */
+.mini-none {
+  height: 100%; display: flex; align-items: center; justify-content: center;
+  color: var(--gris); font-size: 0.7rem; letter-spacing: 0.2em;
+}
+
 .fiche .pied {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  padding: 1.2rem 2rem;
-  border-top: 1px solid var(--bordure);
+  display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+  padding: 1.2rem 2rem; border-top: 1px solid var(--bordure);
 }
 .tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-right: auto; }
 .tags span {
@@ -123,8 +145,7 @@ body {
 
 .fiche .exhibits { display: flex; gap: 1.2rem; flex-wrap: wrap; list-style: none; }
 .fiche .exhibits a {
-  color: var(--blanc); text-decoration: none;
-  border-bottom: 1px solid var(--gris);
+  color: var(--blanc); text-decoration: none; border-bottom: 1px solid var(--gris);
   display: inline-block; padding: 0.2rem 0;
 }
 .fiche .exhibits a:hover, .fiche .exhibits a:focus-visible {
@@ -134,8 +155,7 @@ body {
 .cta {
   color: var(--noir); background: var(--acide);
   padding: 0.7rem 1.4rem; min-height: 44px;
-  text-decoration: none; font-weight: 700; letter-spacing: 0.1em;
-  display: inline-block;
+  text-decoration: none; font-weight: 700; letter-spacing: 0.1em; display: inline-block;
 }
 .cta:hover, .cta:focus-visible { background: var(--blanc); }
 
