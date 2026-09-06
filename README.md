@@ -24,12 +24,16 @@ point.
 
 ## The gallery
 
-| N° | Œuvre | Année | Émotion visée | Matériau |
-|----|-------|-------|---------------|----------|
-| 001 | [DERIVE](sites/derive/hub.html) | 2026 | the slight chill of being watched by a machine with a sense of humor | narrative terminal, ASCII, scroll-metronome |
+| N° | Œuvre | Année | Langue | Émotion visée | Matériau |
+|----|-------|-------|--------|---------------|----------|
+| 001 | [DERIVE](sites/derive/hub.html) | 2026 | fr | the slight chill of being watched by a machine with a sense of humor | narrative terminal, ASCII, scroll-metronome |
 
 ## Platform doctrine
 
+- **Language**: the gallery speaks English; each work speaks its own tongue and
+  declares it in its cartouche (`langue: français` today, maybe `langue: english`
+  tomorrow). French is not a translation gap — it is a material choice, like the
+  color of a canvas.
 - **Static purity**: this gallery is one HTML file. No JS on the platform side.
 - **Neutral chrome**: paper & ink. Color and motion belong to the works.
 - **Author cartouches**: intention first (l'intention), mechanism second
