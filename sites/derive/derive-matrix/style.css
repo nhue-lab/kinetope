@@ -163,14 +163,20 @@ body {
   50%      { text-shadow: 0 0 22px rgba(204,255,0,0.75); }
 }
 
-/* Choix */
+/* Choix : menu de shell — numérotés, inversés au survol, marqués après choix */
 .choix { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
 .choix button {
   background: transparent; color: var(--acide);
   border: 2px solid var(--acide); font: inherit;
   padding: 0.7rem 1.4rem; min-height: 44px; cursor: pointer;
+  transition: background 0.15s, color 0.15s;
 }
-.choix button:hover, .choix button:focus-visible { background: var(--acide); color: #000; }
+.choix button:hover:not(:disabled), .choix button:focus-visible {
+  background: var(--acide); color: #000;
+}
+.choix button:disabled { cursor: default; }
+.choix button.choisi { background: var(--acide); color: #000; }
+.choix button.choisi::before { content: "● "; }
 .reponse { margin-top: 1.5rem; color: var(--gris); }
 .reponse:not([hidden]) { animation: apparait 1s linear forwards; opacity: 0; }
 
