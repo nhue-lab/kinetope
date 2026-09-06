@@ -1,9 +1,63 @@
-/* WARREN — rendering of the fixed catalogue. One local fetch, nothing mysterious. */
+/* WARREN v3 — catalogue rendering. All JSON fields HTML-escaped before injection. */
 (function () {
   "use strict";
 
   var galerie = document.getElementById("galerie");
+  var status = document.getElementById("status");
   if (!galerie) return;
+
+  // Escape every dynamic string — the catalogue is ours, but robustness is not optional.
+  function esc(v) {
+    return String(v == null ? "" : v)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function pad(n) { return (n < 10 ? "00" : n < 100 ? "0" : "") + n; }
+
+  function ficheHTML(s, idx, total) {
+    var ref = "SPEC-" + pad(idx + 1);
+    var observed = s.observed || s.year || "";
+
+    var exhibits = (s.exhibits || []).map(function (p) {
+      return '<li><a href="' + esc(p.url) + '">' + esc(p.name) + "</a></li>";
+    }).join("");
+
+    var tags = (s.tags || []).map(function (t) {
+      return "<span>" + esc(t) + "</span>";
+    }).join("") + (s.easter_eggs ? "<span>easter eggs ✓</span>" : "");
+
+    return (
+      '<article class="fiche">' +
+        '<div class="tete">' +
+          '<span class="ref">' + esc(ref) + "</span>" +
+          "<h2>" + esc(s.title) + "</h2>" +
+          '<span class="obs">obs. ' + esc(observed) + "</span>" +
+        "</div>" +
+        '<div class="corps">' +
+          "<div>" +
+            '<p class="label">mechanism</p>' +
+            "<p>" + esc(s.mechanism) + "</p>" +
+          "</div>" +
+          "<div>" +
+            '<p class="label">why it&#39;s here</p>' +
+            '<p class="pourquoi">' + esc(s.why_here) + "</p>" +
+            '<p class="label" style="margin-top:1.2rem">specimen data</p>' +
+            "<p>" + esc(s.subtitle || "") + " · " + esc(s.year) +
+              " · " + esc(s.weight_kb) + " KB · " + esc(s.type) + "</p>" +
+          "</div>" +
+        "</div>" +
+        '<div class="pied">' +
+          '<div class="tags">' + tags + "</div>" +
+          (exhibits ? '<ul class="exhibits">' + exhibits + "</ul>" : "") +
+          '<a class="cta" href="' + esc(s.url) + '">enter →</a>' +
+        "</div>" +
+      "</article>"
+    );
+  }
 
   fetch("catalogue.json")
     .then(function (r) {
@@ -11,44 +65,29 @@
       return r.json();
     })
     .then(function (data) {
-      if (!data.sites || !data.sites.length) {
+      var sites = data.sites || [];
+      if (!sites.length) {
         galerie.textContent = "> empty catalogue. the warren awaits its first resident.";
+        status.textContent = "> status: 0 specimens catalogued";
         return;
       }
-      data.sites.forEach(function (s, idx) {
-        var fiche = document.createElement("article");
-        fiche.className = "fiche";
 
-        var num = String(idx + 1);
-        var exhibits = (s.exhibits || []).map(function (p) {
-          return '<li><a href="' + p.url + '">' + p.name + "</a></li>";
-        }).join("");
+      var html = sites.map(function (s, idx) {
+        return ficheHTML(s, idx, sites.length);
+      }).join("");
 
-        fiche.innerHTML =
-          '<div class="identite">' +
-            '<span class="num">SITE ' + num + " / " + data.sites.length + "</span>" +
-            "<h2>" + s.title + "</h2>" +
-            '<p class="sous">' + (s.subtitle || "") + "</p>" +
-            '<p class="meta"><b>' + s.year + "</b> · " + s.author +
-              " · " + s.weight_kb + " KB · " + s.type + "</p>" +
-            '<div class="tags">' +
-              (s.tags || []).map(function (t) { return "<span>" + t + "</span>"; }).join("") +
-              (s.easter_eggs ? '<span>easter eggs ✓</span>' : "") +
-            "</div>" +
-          "</div>" +
-          '<div class="corps">' +
-            '<p class="label">mechanism</p>' +
-            '<p class="mecanique">' + s.mechanism + "</p>" +
-            '<p class="label">why it&apos;s here</p>' +
-            '<p class="pourquoi">' + s.why_here + "</p>" +
-            (exhibits ? '<p class="label">exhibits</p><ul class="pieces">' + exhibits + "</ul>" : "") +
-            '<a class="cta" href="' + s.url + '">enter →</a>' +
-          "</div>";
+      // One shot: gallery is static after render (no aria-live chatter).
+      galerie.innerHTML = html;
 
-        galerie.appendChild(fiche);
-      });
+      // Instrumentation line: deterministic, derived from the data itself.
+      var last = sites[sites.length - 1];
+      var date = last.observed || last.year || "n/a";
+      status.innerHTML =
+        "&gt; status: <b>" + sites.length + "</b> specimen" +
+        (sites.length > 1 ? "s" : "") + " catalogued — last entry <b>" + esc(date) + "</b>";
     })
     .catch(function () {
-      galerie.textContent = "> catalogue unreachable. even warrens have rats.";
+      galerie.textContent = "";
+      status.textContent = "> status: catalogue unreachable. even warrens have rats.";
     });
 })();
