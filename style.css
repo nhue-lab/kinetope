@@ -1,12 +1,12 @@
-/* WARREN v5 — previews that grab attention. Scene reproduction, not text snippets. */
+/* WARREN v6 — neutral laboratory chrome. The platform stays quiet; the specimens carry the color.
+   Rule: every expressive choice (acid green, CRT, glow) belongs to the specimens, never to the lab. */
 :root {
-  --noir: #0a0a0a;
-  --blanc: #f5f5f0;
-  --acide: #ccff00;
-  --rouge: #ff2d55;
-  --gris: #9a9a95;
-  --carte: #121212;
-  --bordure: #2a2a2a;
+  --papier: #fafaf8;      /* lab paper */
+  --encre: #111110;       /* ink */
+  --gris: #6b6b66;
+  --gris-clair: #a8a8a2;
+  --ligne: #e2e2de;       /* hairlines */
+  --acide: #ccff00;       /* reserved: data labels + status only, tiny surfaces */
   --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
   --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
@@ -15,71 +15,84 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--noir);
-  color: var(--blanc);
-  font-family: var(--mono);
-  line-height: 1.6;
+  background: var(--papier);
+  color: var(--encre);
+  font-family: var(--sans);
+  line-height: 1.65;
 }
 
-/* ===== Hero ===== */
-.hero { padding: 10vh 8vw 7vh; border-bottom: 3px solid var(--acide); }
+/* ===== Hero — sobre, typographique, aucune décoration ===== */
+.hero { padding: 10vh 8vw 7vh; border-bottom: 2px solid var(--encre); }
 .logo {
   font-family: var(--sans);
-  font-size: clamp(3rem, 12vw, 9rem);
-  font-weight: 900; letter-spacing: -0.04em; line-height: 0.95;
+  font-size: clamp(2.6rem, 9vw, 7rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
 }
-.logo::after { content: "_"; color: var(--acide); animation: caret 1s steps(1) infinite; }
-@keyframes caret { 50% { opacity: 0; } }
-
-.tagline { margin-top: 1rem; font-size: clamp(1rem, 2.5vw, 1.5rem); color: var(--acide); }
+.tagline {
+  margin-top: 0.75rem;
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  color: var(--gris);
+}
 .detail { margin-top: 1rem; max-width: 62ch; color: var(--gris); font-size: 0.95rem; }
+
+/* Ligne d'instrumentation : le seul accent coloré de la plateforme, hors scènes */
 .status {
   margin-top: 2rem; font-size: 0.8rem; color: var(--gris);
-  border: 1px dashed var(--bordure); display: inline-block; padding: 0.4rem 0.9rem;
+  font-family: var(--mono);
+  border: 1px solid var(--ligne);
+  background: #f1f1ee;
+  display: inline-block; padding: 0.4rem 0.9rem;
 }
-.status b { color: var(--acide); font-weight: 400; }
+.status b { color: var(--encre); font-weight: 600; }
 
 /* ===== Galerie ===== */
 #galerie { padding: 5vh 8vw 9vh; }
 
-.fiche { margin-bottom: 4rem; border: 1px solid var(--bordure); background: var(--carte); }
+.fiche {
+  margin-bottom: 5rem;
+  border: 1px solid var(--encre);
+  background: #fff;
+  box-shadow: 8px 8px 0 rgba(17,17,16,0.06);
+}
 
 .fiche .tete {
   display: flex; align-items: baseline; gap: 1.5rem; flex-wrap: wrap;
-  padding: 1.2rem 2rem; border-bottom: 1px solid var(--bordure); background: #161616;
+  padding: 1.1rem 2rem; border-bottom: 1px solid var(--encre);
+  background: #fff;
 }
-.fiche .ref { font-size: 0.78rem; letter-spacing: 0.25em; color: var(--acide); }
+.fiche .ref { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.25em; color: var(--gris); }
 .fiche .tete h2 {
-  font-family: var(--sans);
-  font-size: clamp(1.6rem, 4vw, 2.4rem);
-  font-weight: 900; letter-spacing: -0.02em; margin-right: auto;
+  font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+  font-weight: 800; letter-spacing: -0.02em; margin-right: auto;
 }
-.fiche .obs { font-size: 0.75rem; color: var(--gris); letter-spacing: 0.15em; }
+.fiche .obs { font-family: var(--mono); font-size: 0.72rem; color: var(--gris); letter-spacing: 0.12em; }
 
-/* ===== LA PREVIEW : grande, pleine largeur, scène signature ===== */
+/* ===== Scène : seule zone colorée de la fiche. Le contraste fait l'accroche. ===== */
 .fiche .scene {
   display: block; position: relative;
   height: clamp(220px, 34vw, 380px);
   overflow: hidden;
-  border-bottom: 1px solid var(--bordure);
+  border-bottom: 1px solid var(--encre);
   text-decoration: none;
-  color: var(--blanc);
+  color: #f5f5f0;
 }
 .fiche .scene:hover .cta-hover, .fiche .scene:focus-visible .cta-hover { opacity: 1; }
-
 .cta-hover {
   position: absolute; right: 1.5rem; bottom: 1.5rem;
-  background: var(--acide); color: var(--noir);
+  background: var(--acide); color: #000;
   padding: 0.6rem 1.2rem; font-weight: 700; letter-spacing: 0.1em;
+  font-family: var(--mono); font-size: 0.8rem;
   opacity: 0; transition: opacity 0.2s;
-  font-size: 0.85rem;
 }
 
-/* --- SCENE TERMINAL (derive-matrix) : plein écran noir, texte géant --- */
+/* --- scène terminal : inchangée, c'est l'ADN du spécimen --- */
 .scene-terminal {
   background: radial-gradient(ellipse at 50% 40%, #101c10 0%, #000 70%);
   display: flex; flex-direction: column; justify-content: center;
   padding: 0 8%;
+  font-family: var(--mono);
 }
 .scene-terminal .scanlines {
   position: absolute; inset: 0; pointer-events: none;
@@ -87,22 +100,20 @@ body {
 }
 .scene-terminal .t {
   font-size: clamp(0.7rem, 1.8vw, 1.15rem);
-  line-height: 2;
-  white-space: nowrap;
-  overflow: hidden;
-  color: var(--gris);
+  line-height: 2; white-space: nowrap; overflow: hidden;
+  color: var(--gris-clair);
   text-shadow: 0 0 8px rgba(204,255,0,0.25);
 }
-.scene-terminal .t b { color: var(--acide); font-weight: 400; }
+.scene-terminal .t b { color: #ccff00; font-weight: 400; }
 .scene-terminal .t.grand {
-  color: var(--blanc);
+  color: #f5f5f0;
   font-size: clamp(1rem, 3.2vw, 2rem);
   text-shadow: 0 0 14px rgba(204,255,0,0.45);
 }
-.scene-terminal .t.grand b { color: var(--acide); }
-.scene-terminal .caret::after { content: "█"; color: var(--acide); animation: caret 0.8s steps(1) infinite; }
+.scene-terminal .caret::after { content: "█"; color: #ccff00; animation: caret 0.8s steps(1) infinite; }
+@keyframes caret { 50% { opacity: 0; } }
 
-/* --- SCENE RETRO 2003 : ciel étoilé, fenêtre, gros digits --- */
+/* --- scène 2003 : inchangée --- */
 .scene-2003 {
   background: linear-gradient(180deg, #000040 0%, #000020 100%);
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4%;
@@ -143,70 +154,73 @@ body {
 }
 @keyframes mblink { 50% { opacity: 0.3; } }
 
-/* --- fallback --- */
 .scene-none {
   display: flex; align-items: center; justify-content: center;
   color: var(--gris); font-size: 0.8rem; letter-spacing: 0.3em;
-  background: #0d0d0d;
+  background: #f1f1ee;
 }
 
-/* ===== Corps de fiche ===== */
+/* ===== Corps : sur papier, sobre ===== */
 .fiche .corps { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 @media (max-width: 800px) { .fiche .corps { grid-template-columns: 1fr; } }
 .fiche .corps > div { padding: 2rem; }
-.fiche .corps > div + div { border-left: 1px solid var(--bordure); }
+.fiche .corps > div + div { border-left: 1px solid var(--ligne); }
 @media (max-width: 800px) {
-  .fiche .corps > div + div { border-left: 0; border-top: 1px solid var(--bordure); }
+  .fiche .corps > div + div { border-left: 0; border-top: 1px solid var(--ligne); }
 }
 
 .label {
-  color: var(--acide); font-size: 0.72rem; letter-spacing: 0.3em;
+  font-family: var(--mono);
+  color: var(--gris);
+  font-size: 0.7rem; letter-spacing: 0.3em;
   text-transform: uppercase; margin-bottom: 0.6rem;
 }
 .fiche .corps p:not(.label) { font-size: 0.95rem; }
 .fiche .pourquoi { color: var(--gris); font-style: italic; }
-.fiche .data { margin-top: 1.2rem; }
+.fiche .data { margin-top: 1.2rem; font-family: var(--mono); font-size: 0.85rem; }
 
 .fiche .pied {
   display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
-  padding: 1.2rem 2rem; border-top: 1px solid var(--bordure);
+  padding: 1.1rem 2rem; border-top: 1px solid var(--encre);
 }
 .tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-right: auto; }
 .tags span {
-  border: 1px solid var(--bordure); padding: 0.15rem 0.6rem;
-  font-size: 0.72rem; color: var(--gris); letter-spacing: 0.1em;
+  border: 1px solid var(--ligne); padding: 0.15rem 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.7rem; color: var(--gris); letter-spacing: 0.1em;
 }
 
 .fiche .exhibits { display: flex; gap: 1.2rem; flex-wrap: wrap; list-style: none; }
 .fiche .exhibits a {
-  color: var(--blanc); text-decoration: none; border-bottom: 1px solid var(--gris);
+  font-family: var(--mono);
+  color: var(--encre); text-decoration: none; border-bottom: 1px solid var(--gris-clair);
   display: inline-block; padding: 0.2rem 0;
 }
 .fiche .exhibits a:hover, .fiche .exhibits a:focus-visible {
-  color: var(--acide); border-color: var(--acide);
+  border-color: var(--encre);
 }
 
 .cta {
-  color: var(--noir); background: var(--acide);
+  font-family: var(--mono);
+  color: #fff; background: var(--encre);
   padding: 0.7rem 1.4rem; min-height: 44px;
   text-decoration: none; font-weight: 700; letter-spacing: 0.1em; display: inline-block;
 }
-.cta:hover, .cta:focus-visible { background: var(--blanc); }
+.cta:hover, .cta:focus-visible { background: #333; }
 
 /* ===== Footer / noscript ===== */
 footer {
-  padding: 3rem 8vw; border-top: 1px solid var(--bordure);
+  padding: 3rem 8vw; border-top: 1px solid var(--ligne);
   color: var(--gris); font-size: 0.85rem;
   display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
 }
-.signature { color: var(--acide); }
-.noscript { border: 1px dashed var(--gris); padding: 1.5rem; color: var(--gris); }
-.noscript a { color: var(--acide); }
+.signature { font-family: var(--mono); color: var(--encre); }
+.noscript { border: 1px dashed var(--gris-clair); padding: 1.5rem; color: var(--gris); }
+.noscript a { color: var(--encre); }
 
 /* ===== A11y ===== */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .logo::after { animation: none; }
   .scene-terminal .caret::after { content: ""; }
   .scene-2003 .visiteur { animation: none; opacity: 1; }
 }
