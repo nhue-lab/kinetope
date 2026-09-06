@@ -67,15 +67,33 @@ body {
 @keyframes defile { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* ================= TERMINAL ================= */
-.term { font-family: var(--mono); }
+/* Police : le vrai look console vient des polices bitmap des vieux VT/xterm.
+   Cascadia Mono = terminal Windows moderne ; fallback vers les monos système.
+   Le "petit quelque chose" : légère lettre-spacing, phosphore vert-acide délavé,
+   prompt structuré user@host:~$, timestamps réalistes, curseur qui clignote vraiment. */
+.term { font-family: "Cascadia Mono", "Cascadia Code", Consolas, "DejaVu Sans Mono", var(--mono); }
 
 .ecran {
   min-height: 100vh;
   padding: 15vh 8vw;
   display: flex; flex-direction: column; justify-content: center;
   border-bottom: 1px dashed #222;
-  font-size: clamp(0.95rem, 1.8vw, 1.25rem);
-  line-height: 1.8;
+  font-size: clamp(0.85rem, 1.6vw, 1.1rem);
+  line-height: 1.75;
+  letter-spacing: 0.03em;
+  /* le phosphore : un très léger halo vert derrière tout le texte de l'écran */
+  text-shadow: 0 0 2px rgba(204, 255, 0, 0.18);
+}
+
+/* chaque écran porte un en-tête de session : le terminal a un contexte */
+.ecran::before {
+  content: "der1ve@kinetope:~$ session --continue";
+  display: block;
+  color: var(--gris);
+  font-size: 0.75em;
+  letter-spacing: 0.05em;
+  margin-bottom: 2rem;
+  opacity: 0.6;
 }
 
 /* Texte qui se tape : chaque ligne = animation steps() sur clip, délai en cascade */
@@ -94,9 +112,15 @@ body {
 .ecran.tape .ln:nth-child(5) { animation-delay: 5.8s; }
 @keyframes tape { to { width: 100%; } }
 
-/* caret blocant après chaque ligne tapée */
-.ln::after { content: "█"; color: var(--acide); animation: caret 0.8s steps(1) infinite; }
-@keyframes caret { 50% { opacity: 0; } }
+/* prompt structuré : user@host en vert délavé, la commande en blanc */
+.ln::before {
+  content: "der1ve@kinetope:~$ ";
+  color: #5a8a3a;
+  opacity: 0.85;
+}
+.ln { text-indent: -11.5ch; padding-left: 11.5ch; } /* le prompt reste aligné pendant le typing */
+.ln::after { content: "█"; color: var(--acide); animation: caret 1.1s steps(1) infinite; }
+@keyframes caret { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
 /* Choix */
 .choix { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }

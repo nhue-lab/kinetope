@@ -2,6 +2,10 @@
 (function () {
   "use strict";
 
+  // L'histoire recommence à zéro : jamais de restauration de scroll au refresh.
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  window.scrollTo(0, 0);
+
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---------- Chat fantôme (contenu figé, rotation déterministe) ---------- */
