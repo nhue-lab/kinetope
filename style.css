@@ -47,7 +47,7 @@ body {
 }
 .status b { color: var(--encre); font-weight: 600; }
 
-/* ===== Galerie ===== */
+/* ===== Galerie — la gravité est cassée : les fiches sont mal posées sur la table ===== */
 #galerie { padding: 5vh 8vw 9vh; }
 
 .fiche {
@@ -55,6 +55,36 @@ body {
   border: 1px solid var(--encre);
   background: #fff;
   box-shadow: 8px 8px 0 rgba(17,17,16,0.06);
+}
+
+/* inclinaisons déterministes : cycle fixe, pas d'aléa (nth-of-type) */
+.fiche:nth-of-type(3n+1) { transform: rotate(-0.6deg); margin-left: 0; }
+.fiche:nth-of-type(3n+2) { transform: rotate(0.4deg);  margin-left: 3vw; }
+.fiche:nth-of-type(3n)   { transform: rotate(-0.3deg); margin-right: 3vw; }
+
+/* au survol, la fiche se redresse : le labo a remarqué votre regard */
+.fiche { transition: transform 0.35s ease, box-shadow 0.35s ease; }
+.fiche:hover, .fiche:focus-within {
+  transform: rotate(0deg) scale(1.005);
+  box-shadow: 12px 12px 0 rgba(17,17,16,0.08);
+}
+
+/* ===== Annotations de marges — le labo bavarde dans les interstices ===== */
+.anno {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--gris-clair);
+  font-style: italic;
+  letter-spacing: 0.05em;
+  display: block;
+  max-width: 18ch;
+  line-height: 1.4;
+}
+.anno-gauche { float: left; margin: 0.5rem 0 0 -11vw; transform: rotate(-2deg); }
+.anno-droite { float: right; margin: -1rem -11vw 0 0; transform: rotate(1.5deg); text-align: right; }
+#galerie { overflow: visible; }
+@media (max-width: 1100px) {
+  .anno-gauche, .anno-droite { display: none; } /* pas de marges assez larges : les annotations se taisent */
 }
 
 .fiche .tete {
@@ -223,4 +253,8 @@ footer {
   html { scroll-behavior: auto; }
   .scene-terminal .caret::after { content: ""; }
   .scene-2003 .visiteur { animation: none; opacity: 1; }
+  /* gravité cassée : posée mais figée, sans transition au survol */
+  .fiche { transition: none; transform: none; }
+  .fiche:hover, .fiche:focus-within { transform: none; }
+  .anno-gauche, .anno-droite { transform: none; }
 }
