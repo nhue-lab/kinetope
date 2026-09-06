@@ -1,27 +1,38 @@
-# KINETOPE — a laboratory of web storytelling
+# KINETOPE — a gallery of web stories
 
-KINETOPE (from Greek *kinetos*, "moved", and *topos*, "place") — the place of
-movement. A laboratory of websites where the form is the content: the journey
-is the story. Each entry documents the **mechanism** — how it's built, why it
-works — not just the link.
+Web stories by nhue-lab. Each piece is a small web experience built to make you
+feel one thing — told in scroll, shipped in a few kilobytes.
 
-The catalogue is this HTML file (`index.html`), hand-curated, no backend, no
-JavaScript on the platform side. To add a specimen: copy the block, increment
-`SPEC-00N`.
+Painters paint canvases. Directors shoot films. These are my pieces: stories
+that live in a page, move with your scroll, and end when they have made their
+point.
 
-## Specimens
+## The author's rules (for every piece, before any code)
 
-| # | Ref | Site | Mechanism |
-|---|-----|------|-----------|
-| 1 | SPEC-001 | [DERIVE](sites/derive/hub.html) | Museum-hub of self-contained pages: Matrix-style narrative terminal, visit counter frozen since 2003 |
+1. **One emotion, named.** If the piece can't name the feeling it targets, it
+   isn't ready to be built.
+2. **The story leads.** Every technical choice serves the narrative. No effect
+   without a narrative reason.
+3. **Scroll is the metronome.** The visitor's hand sets the pace; the page sets
+   the frame. Blocks snap, the story advances.
+4. **The page is a character.** It reacts, remembers (within the session),
+   gets impatient, answers back.
+5. **Self-contained.** One folder, no backend, no images, system fonts, works
+   offline. Shareable by URL, replayable forever.
+6. **Frugal by doctrine.** ~20 KB per piece. Constraint is a narrative tool:
+   text is material.
 
-## Principles (non-negotiable)
+## The gallery
 
-- **Self-contained**: every site works standalone, shareable by direct URL.
-- **Frozen**: content lives in the code. Zero maintenance, zero moderation, zero API.
-- **Frugal**: platform < 12 KB, sites < 20 KB each. System fonts, zero images.
-- **Deterministic**: fixed-duration looping animations, no unseeded randomness.
-- **Safe**: strict CSP (`default-src 'none'; style-src 'self'`), no forms, no
-  tracking, no cookies, no JavaScript on the platform.
-- **Neutral chrome**: the platform stays quiet (paper & ink). Color and motion
-  belong to the specimens.
+| N° | Œuvre | Année | Émotion visée | Matériau |
+|----|-------|-------|---------------|----------|
+| 001 | [DERIVE](sites/derive/hub.html) | 2026 | the slight chill of being watched by a machine with a sense of humor | narrative terminal, ASCII, scroll-metronome |
+
+## Platform doctrine
+
+- **Static purity**: this gallery is one HTML file. No JS on the platform side.
+- **Neutral chrome**: paper & ink. Color and motion belong to the works.
+- **Author cartouches**: intention first (l'intention), mechanism second
+  (la mécanique). The story of how it was made comes after the story itself.
+- CSP strict (`default-src 'none'; style-src 'self'`), no forms, no tracking,
+  no cookies.
