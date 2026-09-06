@@ -40,6 +40,43 @@ body {
   font-weight: 800;
   letter-spacing: -0.035em;
   line-height: 0.95;
+  position: relative;
+  display: inline-block;
+}
+
+/* 1 — balayage d'encre : le titre se révèle une fois au chargement (rideau qui se retire) */
+.logo::before {
+  content: "";
+  position: absolute;
+  inset: -0.08em -0.05em -0.05em -0.02em;  /* couvre l'encre des lettres, débordement minime */
+  background: var(--papier);
+  animation: rideau 0.9s steps(24, end) 0.15s forwards;
+  pointer-events: none;
+}
+@keyframes rideau {
+  to { transform: scaleX(0); transform-origin: right; }
+}
+/* l'origine doit rester à droite pendant l'animation : on la fixe dès le départ */
+.logo::before { transform-origin: right; }
+
+/* 5 — glitch d'inventaire : toutes les 12s, 300ms de dérive photocopie */
+.logo::after {
+  content: "KINETOPE";
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  pointer-events: none;
+  animation: derivee 12s steps(1, end) infinite;
+}
+@keyframes derivee {
+  0%, 96.9%  { text-shadow: none; transform: none; clip-path: inset(0); }
+  97%        { text-shadow: -2px 0 rgba(255,45,85,0.55), 2px 0 rgba(204,255,0,0.55);
+               transform: translateX(1px); clip-path: inset(12% 0 58% 0); }
+  98%        { text-shadow: 2px 0 rgba(255,45,85,0.55), -2px 0 rgba(204,255,0,0.55);
+               transform: translateX(-2px); clip-path: inset(55% 0 18% 0); }
+  99%        { text-shadow: -1px 0 rgba(255,45,85,0.4), 1px 0 rgba(204,255,0,0.4);
+               transform: translateX(1px); clip-path: inset(30% 0 40% 0); }
+  100%       { text-shadow: none; transform: none; clip-path: inset(0); }
 }
 .tagline {
   margin-top: 0.75rem;
@@ -291,6 +328,8 @@ footer {
 /* ===== A11y ===== */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .logo::before { animation: none; display: none; }   /* pas de rideau : titre visible d'emblée */
+  .logo::after { animation: none; content: none; }    /* pas de dérive */
   .scene-terminal .caret::after { content: ""; }
   .scene-2003 .visiteur { animation: none; opacity: 1; }
   /* gravité cassée : posée mais figée, sans transition au survol */
