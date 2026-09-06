@@ -1,4 +1,4 @@
-/* WARREN v4 — catalogue rendering + CSS-only previews. All fields escaped. */
+/* WARREN v5 — full-width scene previews. Escaped fields, one-shot render. */
 (function () {
   "use strict";
 
@@ -17,27 +17,42 @@
 
   function pad(n) { return (n < 10 ? "00" : n < 100 ? "0" : "") + n; }
 
-  /* Miniatures en CSS pur : chaque type = un décor reconnaissable, 0 image. */
-  function previewHTML(s) {
+  /* Scènes signature : la preview EST une page du site, en condensé. */
+  function sceneHTML(s) {
     var t = s.preview && s.preview.type;
+    var url = esc(s.url);
+
     if (t === "terminal") {
       var lignes = (s.preview.lines || []).map(function (l) {
-        return "<span><b>" + esc(l[0]) + "</b> " + esc(l[1]) + "</span>";
+        return '<p class="t"><b>' + esc(l[0]) + "</b> " + esc(l[1]) + "</p>";
       }).join("");
-      return '<div class="cadre mini-term" aria-hidden="true">' +
-        lignes +
-        '<span class="caret-ligne">&gt; </span></div>';
+      var punch = esc(s.preview.punch || "");
+      return (
+        '<a class="scene scene-terminal" href="' + url + '" aria-hidden="true" tabindex="-1">' +
+          '<div class="scanlines"></div>' +
+          lignes +
+          '<p class="t grand caret">&gt; ' + punch + "</p>" +
+          '<span class="cta-hover">enter the terminal →</span>' +
+        "</a>"
+      );
     }
+
     if (t === "retro2003") {
       var digits = (s.preview.counter || "000001").split("").map(function (d) {
         return '<span class="d">' + esc(d) + "</span>";
       }).join("");
-      return '<div class="cadre mini-2003" aria-hidden="true">' +
-        '<div class="fen"><div class="barre"><span>welcome.htm</span><i>X</i></div></div>' +
-        '<div class="digits">' + digits + "</div>" +
-        '<p class="blink">UNDER CONSTRUCTION SINCE 2003</p></div>';
+      return (
+        '<a class="scene scene-2003" href="' + url + '" aria-hidden="true" tabindex="-1">' +
+          '<p class="titre2003">::: WELCOME TO MY HOMEPAGE :::</p>' +
+          '<div class="fen"><div class="barre"><span>welcome.htm — Internet Explorer</span><i>X</i></div>' +
+          '<div class="contenu"><div class="digits">' + digits + "</div></div></div>" +
+          '<p class="visiteur">YOU ARE VISITOR N°000001 — CONGRATULATIONS</p>' +
+          '<span class="cta-hover">go back to 2003 →</span>' +
+        "</a>"
+      );
     }
-    return '<div class="cadre mini-none" aria-hidden="true">[ preview pending ]</div>';
+
+    return '<div class="scene scene-none" aria-hidden="true">[ preview pending ]</div>';
   }
 
   function ficheHTML(s, idx) {
@@ -59,6 +74,7 @@
           "<h2>" + esc(s.title) + "</h2>" +
           '<span class="obs">obs. ' + esc(observed) + "</span>" +
         "</div>" +
+        sceneHTML(s) +
         '<div class="corps">' +
           "<div>" +
             '<p class="label">mechanism</p>' +
@@ -69,9 +85,9 @@
             "<p>" + esc(s.subtitle || "") + " · " + esc(s.year) +
               " · " + esc(s.weight_kb) + " KB · " + esc(s.type) + "</p>" +
           "</div>" +
-          '<div class="visuel">' +
-            '<p class="label">preview</p>' +
-            previewHTML(s) +
+          "<div>" +
+            '<p class="label">notes from the lab</p>' +
+            '<p class="pourquoi">' + esc(s.notes || "Field observations pending.") + "</p>" +
           "</div>" +
         "</div>" +
         '<div class="pied">' +
