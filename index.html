@@ -4,13 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="KINETOPE — web stories by nhue-lab. Small, self-contained, emotional.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'">
 <title>KINETOPE — web stories by nhue-lab</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="hero">
+<!-- ============ LE RITUEL D'ENTRÉE ============
+     La galerie pratique ce qu'elle expose : le seuil est une œuvre.
+     Zéro localStorage — la porte s'ouvre à chaque visite.
+     reduced-motion : pas de rideau, l'intro est déjà entrée. -->
+<div class="porte" id="porte">
+  <pre class="porte-texte" aria-hidden="true"><span class="pl">&gt; kinetope — galerie de web stories</span>
+<span class="pl">&gt; 1 œuvre. 1 émotion. zéro demande.</span>
+<span class="pl">&gt; la galerie s'ouvre dans un instant.</span></pre>
+  <a class="entrer" id="entrer" href="#galerie-top">entrer.</a>
+</div>
+
+<header class="hero" id="galerie-top">
   <p class="sur-titre">NHUE-LAB — WEB STORIES — EST. 2026</p>
   <h1 class="logo">KINETOPE</h1>
   <p class="tagline">A gallery of web stories.</p>
@@ -93,8 +104,9 @@
 
 <footer>
   <p class="signature">chaque œuvre est autonome, rejouable, et ne demande rien.</p>
-  <p>KINETOPE — les web stories de nhue-lab. HTML, CSS, un peu de JS quand l'histoire l'exige. Rien d'autre.</p>
+  <p>KINETOPE — les web stories de nhue-lab. HTML, CSS, un peu de JS quand l'histoire l'exige. Rien d'autre. <a class="revoir" href="#" id="revoir">↩ revoir l'entrée</a></p>
 </footer>
 
+<script src="porte.js"></script>
 </body>
 </html>

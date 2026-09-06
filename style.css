@@ -21,6 +21,84 @@ body {
   line-height: 1.65;
 }
 
+/* ===== LE RITUEL D'ENTRÉE =====
+   La porte couvre la galerie tant qu'elle n'est pas ouverte.
+   Le contenu est dans le DOM dès le départ : c'est une mise en scène, pas un bloqueur. */
+.porte {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--papier);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 12vw;
+  transition: transform 0.65s cubic-bezier(0.65, 0, 0.35, 1);
+}
+html.dedans .porte {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+/* le rideau laisse une signature : un filet d'encre à son bord inférieur */
+.porte::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -3px;
+  height: 3px;
+  background: var(--encre);
+}
+
+.porte-texte {
+  font-family: var(--mono);
+  font-size: clamp(0.8rem, 1.8vw, 1.05rem);
+  line-height: 2.2;
+  color: var(--gris);
+  margin-bottom: 2.5rem;
+}
+.porte-texte .pl {
+  display: block;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: tape-porte 0.8s steps(28) forwards;
+}
+.porte-texte .pl:nth-child(1) { animation-delay: 0.3s; }
+.porte-texte .pl:nth-child(2) { animation-delay: 1.3s; }
+.porte-texte .pl:nth-child(3) { animation-delay: 2.3s; }
+@keyframes tape-porte { to { width: 100%; opacity: 1; } }
+
+/* le mot d'entrée : apparaît après le texte, pulse doucement */
+.entrer {
+  font-family: var(--mono);
+  font-size: clamp(1rem, 2.4vw, 1.5rem);
+  color: var(--encre);
+  text-decoration: none;
+  border-bottom: 2px solid var(--acide);
+  padding-bottom: 0.2rem;
+  opacity: 0;
+  animation: reveler-entrer 0.6s ease-out 3.4s forwards;
+}
+@keyframes reveler-entrer { to { opacity: 1; } }
+@media (prefers-reduced-motion: no-preference) {
+  .entrer { animation: reveler-entrer 0.6s ease-out 3.4s forwards, pulse-entrer 2.4s ease-in-out 4.2s infinite; }
+  @keyframes pulse-entrer {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.55; }
+  }
+}
+.entrer:hover, .entrer:focus-visible { color: var(--acide); }
+
+/* hors de la porte, la galerie est là — mais masquée par le rideau */
+html:not(.dedans) .hero, html:not(.dedans) main, html:not(.dedans) footer {
+  visibility: hidden;
+}
+html.dedans .hero, html.dedans main, html.dedans footer {
+  visibility: visible;
+  transition: visibility 0s 0.3s; /* révèle sous le rideau à mi-course */
+}
+
 /* ===== Hero — cartouche de spécimen : précision obsessionnelle, zéro décoration ===== */
 .hero { padding: 8vh 8vw 0; border-bottom: 0; position: relative; }
 
@@ -384,13 +462,18 @@ footer {
 /* ===== A11y ===== */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .logo::before { animation: none; display: none; }   /* pas de rideau : titre visible d'emblée */
-  .logo::after { animation: none; content: none; }    /* pas de dérive */
+  /* le rituel : sans rideau, l'intro est déjà entrée — les lignes lues d'un bloc */
+  .porte { display: none; }
+  html:not(.dedans) .hero, html:not(.dedans) main, html:not(.dedans) footer { visibility: visible; }
+  .porte-texte .pl { animation: none; opacity: 1; width: 100%; }
+  .entrer { animation: none; opacity: 1; }
+  .logo::before { animation: none; display: none; }
+  .logo::after { animation: none; content: none; }
   .scene-terminal .caret::after { content: ""; }
   .scene-2003 .visiteur { animation: none; opacity: 1; }
   /* gravité cassée : posée mais figée, sans transition au survol */
   .fiche { transition: none; transform: none; }
   .fiche:hover, .fiche:focus-within { transform: none; }
   .anno-gauche, .anno-droite { transform: none; }
-  .lapin-mini { animation: none; }   /* le lapin reste posé, glow fixe */
+  .lapin-mini { animation: none; }
 }
