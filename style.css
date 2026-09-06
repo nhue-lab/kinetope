@@ -79,9 +79,13 @@ body {
   100%       { text-shadow: none; transform: none; clip-path: inset(0); }
 }
 .tagline {
-  margin-top: 0.75rem;
-  font-size: clamp(1rem, 2.2vw, 1.35rem);
-  color: var(--encre);
+  margin-top: 1rem;
+  font-family: var(--mono);
+  font-size: clamp(0.72rem, 1.4vw, 0.95rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: var(--gris);
 }
 
 /* la proposition de valeur : une phrase, taille intermédiaire, encre — le pivot du cartouche */
