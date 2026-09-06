@@ -122,8 +122,8 @@ body {
 .ln::after { content: "█"; color: var(--acide); animation: caret 1.1s steps(1) infinite; }
 @keyframes caret { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
-/* le lapin du prologue : révélé (il était déjà là), puis un saut vers la droite.
-   Il attend ensuite, immobile, en bas — le guide qui te regarde scroller. */
+/* le lapin du prologue : fondu doux une fois la conversation finie.
+   Pas de glitch, pas de saut — il apparaît comme une présence, en dégradé. */
 .lapin-prologue {
   font-family: "Cascadia Mono", "Cascadia Code", Consolas, "DejaVu Sans Mono", monospace;
   font-size: clamp(0.7rem, 1.6vw, 1.1rem);
@@ -133,28 +133,14 @@ body {
   margin: 3rem 0 0 2ch;
   align-self: flex-start;
   opacity: 0;
-  transform: translateX(0);
 }
-/* la divulgation : glitch 300ms (il se matérialise mal), puis stable */
 .ecran.tape .lapin-prologue {
-  animation:
-    reveler 0.4s steps(3) 7.4s forwards,      /* après la 5e ligne tapée */
-    saut 0.5s steps(4) 8.4s forwards,          /* puis un saut vers la droite */
-    glitch-in 0.3s steps(2) 7.4s;              /* le flash rouge/acide de naissance */
+  /* démarre après la dernière ligne tapée (5 lignes → 5.8s + 1.2s de frappe) */
+  animation: reveler 1.6s ease-out 7.4s forwards;
 }
 @keyframes reveler {
-  to { opacity: 1; }
-}
-@keyframes saut {
-  0%   { transform: translateX(0) translateY(0); }
-  40%  { transform: translateX(6ch) translateY(-1.2em); }
-  70%  { transform: translateX(9ch) translateY(0); }
-  100% { transform: translateX(9ch) translateY(0); }
-}
-@keyframes glitch-in {
-  0%   { text-shadow: 3px 0 var(--rouge), -3px 0 var(--acide); }
-  50%  { text-shadow: -3px 0 var(--rouge), 3px 0 var(--acide); }
-  100% { text-shadow: 0 0 10px rgba(204,255,0,0.45); }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* Choix */
