@@ -21,31 +21,58 @@ body {
   line-height: 1.65;
 }
 
-/* ===== Hero — sobre, typographique, aucune décoration ===== */
-.hero { padding: 10vh 8vw 7vh; border-bottom: 2px solid var(--encre); }
+/* ===== Hero — cartouche de spécimen : précision obsessionnelle, zéro décoration ===== */
+.hero { padding: 8vh 8vw 0; border-bottom: 0; position: relative; }
+
+/* ligne d'archive au-dessus du nom : petite, mono, pile à gauche */
+.sur-titre {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.32em;
+  color: var(--gris);
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+}
+
 .logo {
   font-family: var(--sans);
-  font-size: clamp(2.6rem, 9vw, 7rem);
+  font-size: clamp(3rem, 11vw, 8rem);
   font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
 }
 .tagline {
   margin-top: 0.75rem;
   font-size: clamp(1rem, 2.2vw, 1.35rem);
-  color: var(--gris);
+  color: var(--encre);
 }
 .detail { margin-top: 1rem; max-width: 62ch; color: var(--gris); font-size: 0.95rem; }
 
-/* Ligne d'instrumentation : le seul accent coloré de la plateforme, hors scènes */
+/* ligne d'instrumentation façon méta de rapport */
 .status {
-  margin-top: 2rem; font-size: 0.8rem; color: var(--gris);
+  margin-top: 2rem;
   font-family: var(--mono);
-  border: 1px solid var(--ligne);
-  background: #f1f1ee;
-  display: inline-block; padding: 0.4rem 0.9rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--gris);
 }
 .status b { color: var(--encre); font-weight: 600; }
+
+/* la règle graduée : sépare le cartouche du reste, ticks tous les 1% (les 4e plus longs) */
+.regle {
+  margin-top: 2.5rem;
+  height: 14px;
+  display: flex;
+  align-items: flex-start;
+  border-bottom: 2px solid var(--encre);
+  overflow: hidden;
+}
+.regle span {
+  flex: 1;
+  height: 6px;
+  border-left: 1px solid var(--gris-clair);
+}
+.regle span:nth-child(4n+1) { height: 12px; border-left-color: var(--encre); }
 
 /* ===== Galerie — la gravité est cassée : les fiches sont mal posées sur la table ===== */
 #galerie { padding: 5vh 8vw 9vh; }
