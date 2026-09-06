@@ -344,11 +344,13 @@ body {
   display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
   padding: 1rem 2rem;
 }
-.tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-right: auto; }
-.tags span {
-  border: 1px solid var(--ligne); padding: 0.15rem 0.6rem;
+.tags { display: none; } /* retiré : les tags appartenaient au dashboard, pas à la galerie */
+.deplacement {
   font-family: var(--mono);
-  font-size: 0.7rem; color: var(--gris); letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  color: var(--gris);
+  font-style: italic;
+  margin-right: auto;
 }
 
 .fiche .exhibits { display: flex; gap: 1.2rem; flex-wrap: wrap; list-style: none; }
